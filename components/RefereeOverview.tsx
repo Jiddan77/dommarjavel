@@ -24,7 +24,8 @@ type RefStats = {
 };
 
 function parseStat(stat: string): [number, number] {
-  return stat.split('–').map(Number);
+  const parts = stat.split('–').map(Number);
+  return [parts[0], parts[1]];
 }
 
 function buildStats(matches: Match[], selectedTeams: string[]): RefStats[] {
