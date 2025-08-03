@@ -3,8 +3,8 @@ import data from "../data/data.json";
 import FancyMultiSelect from "../components/FancyMultiSelect";
 import StatsPanel from "../components/StatsPanel";
 import MatchList from "../components/MatchList";
-import { getAllReferees } from "../utils/getAllReferees";
-import { filterMatches } from "../utils/filterMatches";
+import getAllReferees from "../utils/getAllReferees";
+import filterMatches from "../utils/filterMatches";
 import { motion, AnimatePresence } from "framer-motion";
 
 export default function DomareView() {

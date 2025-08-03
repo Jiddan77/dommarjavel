@@ -1,1 +1,3 @@
-export const homeAwayOptions = ['Hemma', 'Borta'];
+export function getHomeAwayOptions() {
+  return ['Hemma', 'Borta'];
+}

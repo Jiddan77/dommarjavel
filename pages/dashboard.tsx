@@ -4,10 +4,10 @@ import { RefereeCardsBarChart, RefereePenaltiesChart, CardsVsPenaltiesChart } fr
 import { TeamCardsChart, TeamRedCardsChart, TeamPenaltiesChart } from "../components/charts/TeamCharts";
 import { CardsPerMonthChart } from "../components/charts/TrendCharts";
 import FancyMultiSelect from "../components/FancyMultiSelect";
-import { getAllReferees } from "../utils/getAllReferees";
-import { getAllTeams } from "../utils/getAllTeams";
-import { getAllSeasons } from "../utils/getAllSeasons";
-import { filterMatches } from "../utils/filterMatches";
+import getAllReferees from "../utils/getAllReferees";
+import getAllTeams from "../utils/getAllTeams";
+import getAllSeasons from "../utils/getAllSeasons";
+import filterMatches from "../utils/filterMatches";
 import { calculateRefereeStats } from "../utils/statHelpers";
 
 export default function DashboardView() {
