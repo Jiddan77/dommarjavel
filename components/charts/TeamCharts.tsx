@@ -1,7 +1,34 @@
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from "recharts";
 
-export function TeamCardsChart({ matches }) {
-  const teamStats = {};
+// Typ för matchdata
+type Match = {
+  home_team: string;
+  away_team: string;
+  home_cards?: number;
+  away_cards?: number;
+  home_red?: number;
+  away_red?: number;
+  home_penalties?: number;
+  away_penalties?: number;
+};
+
+type TeamCardsStats = {
+  totalCards: number;
+  games: number;
+};
+
+type TeamRedStats = {
+  red: number;
+  games: number;
+};
+
+type TeamPenaltyStats = {
+  penalties: number;
+};
+
+// 🟨 Flest kort per lag
+export function TeamCardsChart({ matches }: { matches: Match[] }) {
+  const teamStats: Record<string, TeamCardsStats> = {};
 
   matches.forEach((match) => {
     [match.home_team, match.away_team].forEach((teamKey) => {
@@ -40,9 +67,9 @@ export function TeamCardsChart({ matches }) {
   );
 }
 
-
-export function TeamRedCardsChart({ matches }) {
-  const teamStats = {};
+// 🟥 Flest röda kort per lag
+export function TeamRedCardsChart({ matches }: { matches: Match[] }) {
+  const teamStats: Record<string, TeamRedStats> = {};
 
   matches.forEach((match) => {
     [match.home_team, match.away_team].forEach((teamKey) => {
@@ -77,8 +104,9 @@ export function TeamRedCardsChart({ matches }) {
   );
 }
 
-export function TeamPenaltiesChart({ matches }) {
-  const teamStats = {};
+// ⚽ Flest straffar per lag
+export function TeamPenaltiesChart({ matches }: { matches: Match[] }) {
+  const teamStats: Record<string, TeamPenaltyStats> = {};
 
   matches.forEach((match) => {
     [match.home_team, match.away_team].forEach((teamKey) => {
