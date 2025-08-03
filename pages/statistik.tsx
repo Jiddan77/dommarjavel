@@ -6,27 +6,6 @@ import { useMemo } from "react";
 import { calculateRefereeStats } from "../utils/statHelpers";
 
 
-import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from "recharts";
-
-function RefereeCardsBarChart({ data }) {
-  const sorted = [...data].sort((a, b) => b.avgCards - a.avgCards).slice(0, 10);
-
-  return (
-    <div className="bg-gray-800 rounded-xl p-4 shadow hover:shadow-xl transition col-span-full">
-      <h2 className="text-lg font-semibold mb-4">📈 Flest kort per match (Topp 10)</h2>
-      <ResponsiveContainer width="100%" height={300}>
-        <BarChart data={sorted}>
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="name" tick={{ fill: "#fff" }} />
-          <YAxis tick={{ fill: "#fff" }} />
-          <Tooltip contentStyle={{ backgroundColor: "#1f2937", borderColor: "#4b5563" }} />
-          <Bar dataKey="avgCards" fill="#facc15" />
-        </BarChart>
-      </ResponsiveContainer>
-    </div>
-  );
-}
-
 
 export default function StatistikView() {
   const stats = useMemo(() => calculateRefereeStats(data.matches), []);
