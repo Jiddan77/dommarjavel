@@ -1,3 +1,5 @@
+'use client';
+
 import {
   LineChart,
   Line,
@@ -6,8 +8,8 @@ import {
   CartesianGrid,
   Tooltip,
   ResponsiveContainer,
-} from "recharts";
-import { format, parseISO } from "date-fns";
+} from 'recharts';
+import { format, parseISO } from 'date-fns';
 
 type Match = {
   date: string;
@@ -15,25 +17,32 @@ type Match = {
   away_cards?: number;
 };
 
-export function CardsPerMonthChart({ matches }: { matches: Match[] }) {
-  // 💡 Typa objektet direkt
-  const monthlyStats: Record<string, { cards: number }> = {};
+type MonthlyStat = {
+  cards: number;
+};
 
-  matches.forEach((match) => {
-    if (!match.date) return;
+type Props = {
+  matches: Match[];
+};
+
+export function CardsPerMonthChart({ matches }: Props) {
+  const monthlyStats: Record<string, MonthlyStat> = {};
+
+  for (const match of matches) {
+    if (!match.date) continue;
+
     const date = parseISO(match.date);
-    const key = format(date, "yyyy-MM");
+    const key = format(date, 'yyyy-MM');
 
     if (!monthlyStats[key]) {
       monthlyStats[key] = { cards: 0 };
     }
 
     monthlyStats[key].cards += (match.home_cards || 0) + (match.away_cards || 0);
-  });
+  }
 
-  // 💡 Typa entries
   const data = Object.entries(monthlyStats)
-    .map(([month, stats]: [string, { cards: number }]) => ({
+    .map(([month, stats]: [string, MonthlyStat]) => ({
       month,
       cards: stats.cards,
     }))
@@ -45,16 +54,16 @@ export function CardsPerMonthChart({ matches }: { matches: Match[] }) {
       <ResponsiveContainer width="100%" height={300}>
         <LineChart data={data}>
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="month" tick={{ fill: "#fff" }} />
-          <YAxis tick={{ fill: "#fff" }} />
+          <XAxis dataKey="month" tick={{ fill: '#fff' }} />
+          <YAxis tick={{ fill: '#fff' }} />
           <Tooltip
             contentStyle={{
-              backgroundColor: "#1E3A8A",
-              borderColor: "#4b5563",
-              color: "#fff",
+              backgroundColor: '#1E3A8A',
+              borderColor: '#4b5563',
+              color: '#fff',
             }}
-            labelStyle={{ color: "#FCD34D" }}
-            itemStyle={{ color: "#fff" }}
+            labelStyle={{ color: '#FCD34D' }}
+            itemStyle={{ color: '#fff' }}
           />
           <Line type="monotone" dataKey="cards" stroke="#FCD34D" strokeWidth={2} />
         </LineChart>
