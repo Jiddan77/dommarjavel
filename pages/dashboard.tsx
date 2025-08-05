@@ -33,6 +33,7 @@ export default function DashboardPage() {
     referees: selectedReferees,
     teams: selectedTeams,
     seasons: selectedSeasons,
+    homeAway: [], // 👈 lägg till detta
   });
 
   const filteredRefereeStats = calculateRefereeStats(data);
