@@ -43,24 +43,34 @@ export default function DashboardPage() {
       <h1 className="text-2xl font-bold">Dommarjävel</h1>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <FancyMultiSelect
-          options={refereeOptions}
-          value={selectedReferees}
-          onChange={setSelectedReferees}
-          label="Domare"
-        />
-        <FancyMultiSelect
-          options={teamOptions}
-          value={selectedTeams}
-          onChange={setSelectedTeams}
-          label="Lag"
-        />
-        <FancyMultiSelect
-          options={seasonOptions}
-          value={selectedSeasons}
-          onChange={setSelectedSeasons}
-          label="Säsong"
-        />
+      <FancyMultiSelect
+  options={refereeOptions}
+  selected={selectedReferees}
+  onChange={setSelectedReferees}
+  label="Domare"
+/>
+
+<FancyMultiSelect
+  options={teamOptions}
+  selected={selectedTeams}
+  onChange={setSelectedTeams}
+  label="Lag"
+/>
+
+<FancyMultiSelect
+  options={seasonOptions}
+  selected={selectedSeasons}
+  onChange={setSelectedSeasons}
+  label="Säsong"
+/>
+
+<FancyMultiSelect
+  options={homeAwayOptions}
+  selected={selectedHomeAway}
+  onChange={setSelectedHomeAway}
+  label="Hemma/Borta"
+/>
+
       </div>
 
       <StatsPanel matches={filteredMatches} />
