@@ -1,51 +1,40 @@
 import { useState } from "react";
 import data from "../data/data.json";
-import FancyMultiSelect from "../components/FancyMultiSelect";
-import StatsPanel from "../components/StatsPanel";
-import MatchList from "../components/MatchList";
+import MatchList from "@/components/MatchList";
 import { getAllReferees } from "../utils/getAllReferees";
 import { filterMatches } from "../utils/filterMatches";
-import { motion, AnimatePresence } from "framer-motion";
+import FancyMultiSelect from "@/components/FancyMultiSelect";
+import RefereeCharts from "@/components/charts/RefereeCharts";
 
-export default function DomareView() {
+export default function DomarePage() {
   const [selectedReferees, setSelectedReferees] = useState<string[]>([]);
 
-  const refereeOptions = getAllReferees(data).map((ref) => ({
-    label: "🧑‍⚖️ " + ref,
-    value: ref,
+  const refereeOptions = getAllReferees(data).map((r) => ({
+    label: `👨‍⚖️ ${r}`,
+    value: r,
   }));
 
-  const filteredMatches = filterMatches(data.matches, {
+  const filteredMatches = filterMatches(data, {
     referees: selectedReferees,
+    teams: [],
+    seasons: [],
   });
 
   return (
-    <main className="min-h-screen p-4 bg-gray-950 text-white">
-      <h1 className="text-2xl font-bold mb-4">👨‍⚖️ Utforska Domare</h1>
-      <div className="mb-6 max-w-xl">
+    <div className="space-y-4">
+      <h1 className="text-2xl font-bold">Domare</h1>
+
+      <div className="max-w-md">
         <FancyMultiSelect
           options={refereeOptions}
-          selected={selectedReferees}
+          value={selectedReferees}
           onChange={setSelectedReferees}
-          placeholder="Välj en eller flera domare"
+          label="Välj domare"
         />
       </div>
 
-      <AnimatePresence mode="wait">
-        {selectedReferees.length > 0 && (
-          <motion.div
-            key={selectedReferees.join(",")}
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.3 }}
-            className="space-y-6"
-          >
-            <StatsPanel matches={filteredMatches} />
-            <MatchList matches={filteredMatches} />
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </main>
+      <RefereeCharts matches={filteredMatches} />
+      <MatchList matches={filteredMatches} />
+    </div>
   );
 }

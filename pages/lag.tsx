@@ -1,80 +1,65 @@
 import { useState } from "react";
 import data from "../data/data.json";
-import FancyMultiSelect from "../components/FancyMultiSelect";
-import StatsPanel from "../components/StatsPanel";
-import MatchList from "../components/MatchList";
+import MatchList from "@/components/MatchList";
 import { getAllTeams } from "../utils/getAllTeams";
 import { getAllSeasons } from "../utils/getAllSeasons";
 import { getHomeAwayOptions } from "../utils/getHomeAwayOptions";
 import { filterMatches } from "../utils/filterMatches";
-import { motion, AnimatePresence } from "framer-motion";
+import FancyMultiSelect from "@/components/FancyMultiSelect";
+import TeamCharts from "@/components/charts/TeamCharts";
 
-export default function LagView() {
+export default function LagPage() {
   const [selectedTeams, setSelectedTeams] = useState<string[]>([]);
   const [selectedSeasons, setSelectedSeasons] = useState<string[]>([]);
   const [selectedHomeAway, setSelectedHomeAway] = useState<string[]>([]);
 
-  const teamOptions = getAllTeams(data).map((team) => ({
-    label: "🏟 " + team,
-    value: team,
+  const teamOptions = getAllTeams(data).map((t) => ({
+    label: `🏟️ ${t}`,
+    value: t,
   }));
-
   const seasonOptions = getAllSeasons(data).map((s) => ({
     label: "📅 " + s,
     value: s,
   }));
-
-  const homeAwayOptions = getHomeAwayOptions().map((opt) => ({
-    label: opt === "home" ? "🏠 Hemma" : "🚌 Borta",
-    value: opt,
+  const homeAwayOptions = getHomeAwayOptions().map((h) => ({
+    label: h,
+    value: h,
   }));
 
-  const filteredMatches = filterMatches(data.matches, {
+  const filteredMatches = filterMatches(data, {
+    referees: [],
     teams: selectedTeams,
     seasons: selectedSeasons,
-    home_away: selectedHomeAway,
+    homeAway: selectedHomeAway,
   });
 
   return (
-    <main className="min-h-screen p-4 bg-gray-950 text-white">
-      <h1 className="text-2xl font-bold mb-4">🏟 Utforska Lag</h1>
+    <div className="space-y-4">
+      <h1 className="text-2xl font-bold">Lag</h1>
 
-      <div className="grid gap-4 md:grid-cols-3 mb-6">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <FancyMultiSelect
           options={teamOptions}
-          selected={selectedTeams}
+          value={selectedTeams}
           onChange={setSelectedTeams}
-          placeholder="Välj lag"
+          label="Lag"
         />
         <FancyMultiSelect
           options={seasonOptions}
-          selected={selectedSeasons}
+          value={selectedSeasons}
           onChange={setSelectedSeasons}
-          placeholder="Välj säsong"
+          label="Säsong"
         />
         <FancyMultiSelect
           options={homeAwayOptions}
-          selected={selectedHomeAway}
+          value={selectedHomeAway}
           onChange={setSelectedHomeAway}
-          placeholder="Hemma eller borta"
+          label="Hemma/Borta"
         />
       </div>
 
-      <AnimatePresence mode="wait">
-        {filteredMatches.length > 0 && (
-          <motion.div
-            key={selectedTeams.join(",") + selectedSeasons.join(",") + selectedHomeAway.join(",")}
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.3 }}
-            className="space-y-6"
-          >
-            <StatsPanel matches={filteredMatches} />
-            <MatchList matches={filteredMatches} />
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </main>
+      <TeamCharts matches={filteredMatches} />
+      <MatchList matches={filteredMatches} />
+    </div>
   );
 }
