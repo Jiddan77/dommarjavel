@@ -75,7 +75,7 @@ export default function DashboardPage() {
         />
       </div>
 
-      <StatsPanel matches={filteredMatches} selectedTeams={selectedTeams} />
+      <StatsPanel filteredMatches={filteredMatches} selectedTeams={selectedTeams} />
       <RefereeOverview stats={filteredRefereeStats} />
       <CardsPerMonthChart matches={filteredMatches} />
       <MatchList matches={filteredMatches} />
