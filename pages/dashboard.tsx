@@ -5,6 +5,7 @@ import FancyMultiSelect from "../components/FancyMultiSelect";
 import { getAllReferees } from "../utils/getAllReferees";
 import { getAllTeams } from "../utils/getAllTeams";
 import { getAllSeasons } from "../utils/getAllSeasons";
+import { getHomeAwayOptions } from "../utils/getHomeAwayOptions";
 import { filterMatches } from "../utils/filterMatches";
 import { calculateRefereeStats } from "../utils/statHelpers";
 import RefereeOverview from "@/components/RefereeOverview";
@@ -15,6 +16,7 @@ export default function DashboardPage() {
   const [selectedReferees, setSelectedReferees] = useState<string[]>([]);
   const [selectedTeams, setSelectedTeams] = useState<string[]>([]);
   const [selectedSeasons, setSelectedSeasons] = useState<string[]>([]);
+  const [selectedHomeAway, setSelectedHomeAway] = useState<string[]>([]);
 
   const refereeOptions = getAllReferees(data).map((r) => ({
     label: `👨‍⚖️ ${r}`,
@@ -28,12 +30,16 @@ export default function DashboardPage() {
     label: "📅 " + s,
     value: s,
   }));
+  const homeAwayOptions = getHomeAwayOptions().map((h) => ({
+    label: h,
+    value: h,
+  }));
 
   const filteredMatches = filterMatches(data, {
     referees: selectedReferees,
     teams: selectedTeams,
     seasons: selectedSeasons,
-    homeAway: [], // 👈 lägg till detta
+    homeAway: selectedHomeAway,
   });
 
   const filteredRefereeStats = calculateRefereeStats(data);
@@ -43,37 +49,33 @@ export default function DashboardPage() {
       <h1 className="text-2xl font-bold">Dommarjävel</h1>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-      <FancyMultiSelect
-  options={refereeOptions}
-  selected={selectedReferees}
-  onChange={setSelectedReferees}
-  label="Domare"
-/>
-
-<FancyMultiSelect
-  options={teamOptions}
-  selected={selectedTeams}
-  onChange={setSelectedTeams}
-  label="Lag"
-/>
-
-<FancyMultiSelect
-  options={seasonOptions}
-  selected={selectedSeasons}
-  onChange={setSelectedSeasons}
-  label="Säsong"
-/>
-
-<FancyMultiSelect
-  options={homeAwayOptions}
-  selected={selectedHomeAway}
-  onChange={setSelectedHomeAway}
-  label="Hemma/Borta"
-/>
-
+        <FancyMultiSelect
+          options={refereeOptions}
+          selected={selectedReferees}
+          onChange={setSelectedReferees}
+          label="Domare"
+        />
+        <FancyMultiSelect
+          options={teamOptions}
+          selected={selectedTeams}
+          onChange={setSelectedTeams}
+          label="Lag"
+        />
+        <FancyMultiSelect
+          options={seasonOptions}
+          selected={selectedSeasons}
+          onChange={setSelectedSeasons}
+          label="Säsong"
+        />
+        <FancyMultiSelect
+          options={homeAwayOptions}
+          selected={selectedHomeAway}
+          onChange={setSelectedHomeAway}
+          label="Hemma/Borta"
+        />
       </div>
 
-      <StatsPanel matches={filteredMatches} />
+      <StatsPanel matches={filteredMatches} selectedTeams={selectedTeams} />
       <RefereeOverview stats={filteredRefereeStats} />
       <CardsPerMonthChart matches={filteredMatches} />
       <MatchList matches={filteredMatches} />
