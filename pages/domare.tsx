@@ -18,6 +18,7 @@ export default function DomarePage() {
     referees: selectedReferees,
     teams: [],
     seasons: [],
+    homeAway: [],
   });
 
   return (
@@ -27,7 +28,7 @@ export default function DomarePage() {
       <div className="max-w-md">
         <FancyMultiSelect
           options={refereeOptions}
-          value={selectedReferees}
+          selected={selectedReferees}
           onChange={setSelectedReferees}
           label="Välj domare"
         />

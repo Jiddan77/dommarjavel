@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState } from "react";
 import data from "../data/data.json";
 import { CardsPerMonthChart } from "../components/charts/TrendCharts";
 import FancyMultiSelect from "../components/FancyMultiSelect";
@@ -7,9 +7,8 @@ import { getAllTeams } from "../utils/getAllTeams";
 import { getAllSeasons } from "../utils/getAllSeasons";
 import { getHomeAwayOptions } from "../utils/getHomeAwayOptions";
 import { filterMatches } from "../utils/filterMatches";
-import { calculateRefereeStats } from "../utils/statHelpers";
-import RefereeOverview from "@/components/RefereeOverview";
 import StatsPanel from "@/components/StatsPanel";
+import RefereeOverview from "@/components/RefereeOverview";
 import MatchList from "@/components/MatchList";
 
 export default function DashboardPage() {
@@ -22,14 +21,17 @@ export default function DashboardPage() {
     label: `👨‍⚖️ ${r}`,
     value: r,
   }));
+
   const teamOptions = getAllTeams(data).map((t) => ({
     label: `🏟️ ${t}`,
     value: t,
   }));
+
   const seasonOptions = getAllSeasons(data).map((s) => ({
     label: "📅 " + s,
     value: s,
   }));
+
   const homeAwayOptions = getHomeAwayOptions().map((h) => ({
     label: h,
     value: h,
@@ -41,8 +43,6 @@ export default function DashboardPage() {
     seasons: selectedSeasons,
     homeAway: selectedHomeAway,
   });
-
-  const filteredRefereeStats = calculateRefereeStats(data);
 
   return (
     <div className="space-y-4">
@@ -76,7 +76,7 @@ export default function DashboardPage() {
       </div>
 
       <StatsPanel filteredMatches={filteredMatches} selectedTeams={selectedTeams} />
-      <RefereeOverview stats={filteredRefereeStats} />
+      <RefereeOverview allMatches={filteredMatches} selectedTeams={selectedTeams} />
       <CardsPerMonthChart matches={filteredMatches} />
       <MatchList matches={filteredMatches} />
     </div>

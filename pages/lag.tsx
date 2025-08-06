@@ -17,10 +17,12 @@ export default function LagPage() {
     label: `🏟️ ${t}`,
     value: t,
   }));
+
   const seasonOptions = getAllSeasons(data).map((s) => ({
     label: "📅 " + s,
     value: s,
   }));
+
   const homeAwayOptions = getHomeAwayOptions().map((h) => ({
     label: h,
     value: h,
@@ -40,19 +42,19 @@ export default function LagPage() {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <FancyMultiSelect
           options={teamOptions}
-          value={selectedTeams}
+          selected={selectedTeams}
           onChange={setSelectedTeams}
           label="Lag"
         />
         <FancyMultiSelect
           options={seasonOptions}
-          value={selectedSeasons}
+          selected={selectedSeasons}
           onChange={setSelectedSeasons}
           label="Säsong"
         />
         <FancyMultiSelect
           options={homeAwayOptions}
-          value={selectedHomeAway}
+          selected={selectedHomeAway}
           onChange={setSelectedHomeAway}
           label="Hemma/Borta"
         />
