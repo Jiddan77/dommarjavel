@@ -6,7 +6,7 @@ import { getAllSeasons } from "../utils/getAllSeasons";
 import { getHomeAwayOptions } from "../utils/getHomeAwayOptions";
 import { filterMatches } from "../utils/filterMatches";
 import FancyMultiSelect from "@/components/FancyMultiSelect";
-import TeamCharts from "@/components/charts/TeamCharts";
+import { TeamCharts } from "@/components/charts/TeamCharts"; // ✅ FIXAD
 
 export default function LagPage() {
   const [selectedTeams, setSelectedTeams] = useState<string[]>([]);
