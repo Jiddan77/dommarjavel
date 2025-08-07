@@ -1,7 +1,10 @@
 {
   "/_app": "pages/_app.js",
-  "/_error": "pages/_error.js",
-  "/_document": "pages/_document.js",
+  "/domare": "pages/domare.js",
+  "/dashboard": "pages/dashboard.js",
   "/lag": "pages/lag.js",
-  "/": "pages/index.js"
+  "/": "pages/index.js",
+  "/statistik": "pages/statistik.js",
+  "/_error": "pages/_error.js",
+  "/_document": "pages/_document.js"
 }
