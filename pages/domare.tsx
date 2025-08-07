@@ -4,7 +4,11 @@ import MatchList from "@/components/MatchList";
 import { getAllReferees } from "../utils/getAllReferees";
 import { filterMatches } from "../utils/filterMatches";
 import FancyMultiSelect from "@/components/FancyMultiSelect";
-import RefereeCharts from "@/components/charts/RefereeCharts";
+import {
+  RefereeCardsBarChart,
+  RefereePenaltiesChart,
+  CardsVsPenaltiesChart,
+} from "@/components/charts/RefereeCharts";
 
 export default function DomarePage() {
   const [selectedReferees, setSelectedReferees] = useState<string[]>([]);
@@ -34,7 +38,11 @@ export default function DomarePage() {
         />
       </div>
 
-      <RefereeCharts matches={filteredMatches} />
+      {/* Använder alla tre diagram */}
+      <RefereeCardsBarChart data={filteredMatches} />
+      <RefereePenaltiesChart data={filteredMatches} />
+      <CardsVsPenaltiesChart data={filteredMatches} />
+
       <MatchList matches={filteredMatches} />
     </div>
   );
